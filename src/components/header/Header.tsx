@@ -38,12 +38,12 @@ const Header = () => {
       {!isMobile && (
         <>
           <NavContainer>
-            <Button sx={{ color: '#006400' }} onClick={() => navigate('/home')}>Home</Button>
-            <Button sx={{ color: '#006400' }} onClick={() => navigate('/neighborhoods/00c818c8-c6cf-4d3d-9c13-f65d0a9de03c')}>Bairros</Button>
-            <Button sx={{ color: '#006400' }} onClick={() => navigate('/duvidas')}>Perguntas | Dúvidas</Button>
+            <Button color="primary" onClick={() => navigate('/home')}>Home</Button>
+            <Button color="primary" onClick={() => navigate('/neighborhoods/00c818c8-c6cf-4d3d-9c13-f65d0a9de03c')}>Bairros</Button>
+            <Button color="primary" onClick={() => navigate('/duvidas')}>Perguntas | Dúvidas</Button>
           </NavContainer>
 
-          <Button sx={{ color: '#006400' }} onClick={handleAuth}>
+          <Button color="primary" onClick={handleAuth}>
             {isLoggedIn ? 'Logout' : 'Login'}
           </Button>
         </>
@@ -53,7 +53,7 @@ const Header = () => {
         <>
           <Box sx={{ flexGrow: 1 }} />
 
-          <IconButton color="inherit" onClick={handleMenuOpen} sx={{ color: '#006400' }}>
+          <IconButton color="inherit" onClick={handleMenuOpen}>
             <MenuIcon />
           </IconButton>
 

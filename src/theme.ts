@@ -22,7 +22,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: `'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif`, // usa Inter > Roboto > fallback
+    fontFamily: `'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif`,
     h3: {
       fontWeight: 400,
       fontSize: '2.25rem',
@@ -32,5 +32,22 @@ const theme = createTheme({
       fontSize: '1.25rem',
     },
   },
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: '#006400',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: '#006400'
+        },
+      }
+    }
+  },
 });
+
 export default theme;

@@ -12,7 +12,7 @@ interface neighborhood {
   grade: number;
 }
 
-interface PostAnswers {
+export interface PostAnswers {
   id: string;
   description: string;
   userId: string
@@ -21,7 +21,7 @@ interface PostAnswers {
 
 export interface Post {
   id: string;
-  text: string;
+  content: string;
   image?: string;
   createdAt: string;
   user: User;
@@ -31,11 +31,11 @@ export interface Post {
 export interface PostCardProps {
   post: Post;
   allowImages?: boolean;
-  onAddComment: (postId: string, text: string) => void;
+  onAddComment: (postId: string, commentText: string) => void;
 }
 
 export interface PostListProps {
   posts: Post[];
   allowImages?: boolean;
-  onAddComment: (postId: string, text: string) => void;
+  onAddComment: (postId: string, commentText: string) => void;
 }

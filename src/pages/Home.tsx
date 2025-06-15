@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import PostList from '../components/post/PostList';
 import CreatePostCard from '../components/post/CreatePost';
-import { getPosts } from '../services/post.service';
+import { createPostAnswer, getPosts } from '../services/post/post.service';
 import type { Post } from '../components/post/post.interface';
 
 const Home = () => {
@@ -30,7 +30,7 @@ const Home = () => {
   }, [])
 
   const currentUser = {
-    id: 'u1',
+    id: 'e9b12a1a-7e39-4bb4-a109-30e645eeccdc',
     name: 'João Brasil',
     avatarUrl: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     neighborhood: 'Centro',
@@ -42,9 +42,19 @@ const Home = () => {
     console.log('Abrir modal de criação de post...');
   };
 
-  const handleAddComment = () => {
-    console.log('Abrir modal de criação de comentario...');
-  };
+const handleAddComment = async (postId: string, commentText: string) => {
+  try {
+    const postAnswer = {
+      postId,
+      description: commentText,
+      userId: currentUser.id
+    }
+    await createPostAnswer(postAnswer);
+    await fetchData();
+  } catch (error) {
+    console.error('Erro ao adicionar comentário:', error);
+  }
+};
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>

@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <FooterContainer as="footer">
       <Typography variant="body2" color="text.secondary">
-        © {new Date().getFullYear()} Minha Aplicação
+        © {new Date().getFullYear()} TUDO | Maringá
       </Typography>
     </FooterContainer>
   );

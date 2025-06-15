@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme } from
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-import tudoMaringaLogo from '../../assets/tudomaringa_logo.webp';
+import tudoMaringaLogo from '../../assets/tudomaringa_logo.png';
 import { HeaderContainer, NavContainer, Logo } from './header.style';
 
 const Header = () => {

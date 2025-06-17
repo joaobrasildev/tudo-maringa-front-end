@@ -1,7 +1,4 @@
-import { Avatar, Box, Button, Card, CardContent, Typography } from '@mui/material';
-import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
-import ImageIcon from '@mui/icons-material/Image';
-import ArticleIcon from '@mui/icons-material/Article';
+import { Avatar, Box, Card, CardContent, Typography } from '@mui/material';
 
 type CreatePostCardProps = {
   currentUser: {
@@ -31,18 +28,6 @@ const CreatePostCard = ({ currentUser, onOpenModal }: CreatePostCardProps) => {
           >
             <Typography color="textSecondary">Comece uma publicação</Typography>
           </Box>
-        </Box>
-
-        <Box display="flex" justifyContent="space-between" px={1} pb={1}>
-          <Button startIcon={<VideoLibraryIcon color="success" />} sx={{ textTransform: "none"}}>
-            Vídeo
-          </Button>
-          <Button startIcon={<ImageIcon color="primary" />} sx={{ textTransform: "none"}}>
-            Foto
-          </Button>
-          <Button startIcon={<ArticleIcon color="error" />} sx={{ textTransform: "none"}}>
-            Escrever artigo
-          </Button>
         </Box>
       </CardContent>
     </Card>

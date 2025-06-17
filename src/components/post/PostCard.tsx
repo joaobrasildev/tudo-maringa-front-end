@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -30,14 +31,48 @@ const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => 
       />
 
       {allowImages && post.image && (
-        <CardMedia component="img" height="300" image={post.image} alt="Post image" />
+        <Box
+          sx={{
+            width: '100%',
+            height: '300px',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          <Box
+            component="img"
+            src={post.image}
+            alt="Background blur"
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              filter: 'blur(10px)',
+              opacity: 0.3,
+            }}
+          />
+          <CardMedia
+            component="img"
+            image={post.image}
+            alt="Post image"
+            sx={{
+              position: 'relative',
+              zIndex: 1,
+              width: '100%',
+              height: '300px',
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
       )}
-
-      <CardContent>
+      <CardContent sx={{ pb: 0 }}>
         <Typography variant="body1">{post.content}</Typography>
       </CardContent>
 
-      <CardActions disableSpacing>
+      <CardActions sx={{ pt: 0 }} disableSpacing>
         <IconButton aria-label="Curtir">
           <FavoriteBorderIcon />
         </IconButton>

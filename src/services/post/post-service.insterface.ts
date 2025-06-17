@@ -3,3 +3,10 @@ export interface ICreatePostAnswer {
   userId: string
   postId: string;
 }
+
+export interface ICreatePost {
+  content: string;
+  neighborhoodId: string;
+  userId: string
+  image?: string;
+}

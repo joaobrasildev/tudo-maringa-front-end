@@ -15,7 +15,7 @@ const Header = () => {
   const open = Boolean(anchorEl);
 
   const handleAuth = () => {
-    navigate('/');
+    navigate('/login');
   };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

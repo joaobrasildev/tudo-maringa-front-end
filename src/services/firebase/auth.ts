@@ -12,6 +12,12 @@ export async function loginWithGoogle() {
   return result.user;
 }
 
+export async function loginWithFacebook() {
+  const provider = new FacebookAuthProvider();
+  const result = await signInWithPopup(auth, provider);
+  return result.user;
+}
+
 export async function getIdToken(forceRefresh = false): Promise<string> {
   const currentUser: User | null = auth.currentUser;
 
@@ -26,11 +32,6 @@ export async function getIdToken(forceRefresh = false): Promise<string> {
 }
 
 export async function getValidToken(): Promise<string> {
-  const token = localStorage.getItem('token');
-
-  if (token) {
-    return token;
-  }
 
   const user = auth.currentUser;
   if (user) {
@@ -58,10 +59,4 @@ async function waitForUserAuth(timeoutMs: number): Promise<void> {
       waited += intervalMs;
     }, intervalMs);
   });
-}
-
-export async function loginWithFacebook() {
-  const provider = new FacebookAuthProvider();
-  const result = await signInWithPopup(auth, provider);
-  return result.user;
 }

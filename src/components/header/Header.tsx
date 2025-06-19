@@ -4,18 +4,24 @@ import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import tudoMaringaLogo from '../../assets/tudomaringa_logo.png';
 import { HeaderContainer, NavContainer, Logo } from './header.style';
+import { useAuth } from '../../providers/auth.provider';
 
 const Header = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isLoggedIn = true; // Troque por lógica real
+  const { isLoggedIn, logout } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleAuth = () => {
-    navigate('/login');
+    if (isLoggedIn) {
+      logout();
+      navigate('/login');
+    } else {
+      navigate('/home');
+    }
   };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

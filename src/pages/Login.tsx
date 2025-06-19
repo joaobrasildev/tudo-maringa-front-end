@@ -11,36 +11,37 @@ import {
   Divider,
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
-import AppleIcon from '@mui/icons-material/Apple';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useNavigate } from 'react-router-dom';
 import tudoMaringaLogo from '../assets/tudomaringa_logo_white.png';
-import { getIdToken, loginWithEmail, loginWithFacebook, loginWithGoogle } from '../services/firebase/auth';
+import { getValidToken, loginWithFacebook, loginWithGoogle } from '../services/firebase/auth';
 import { getUserByUid } from '../services/user/user.service';
+import { useAuth } from '../providers/auth.provider';
+import { auth } from '../services/firebase/firebase';
 
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleLogin = async () => {
-    try {
-        const user = await loginWithEmail(email, password);
-        const token = await getIdToken();
-        console.log('Token JWT:', token);
-        navigate(`/home`);
-    } catch (error) {
-        console.error('Erro no login:', error);
-    }
-  };
+  // const handleLogin = async () => {
+  //   try {
+  //       const user = await loginWithEmail(email, password);
+  //       await getValidToken()
+  //       navigate(`/home`);
+  //   } catch (error) {
+  //       console.error('Erro no login:', error);
+  //   }
+  // };
 
   const handleGoogleLogin = async () => {
     try {
       await loginWithGoogle();
-      const token = await getIdToken();
-      localStorage.setItem('token', token);
+      await getValidToken()
       const user = await getUserByUid()
+      login(auth.currentUser); 
 
       if(user) {
         navigate(`/home`);
@@ -55,11 +56,11 @@ function Login() {
   const handleFacebookLogin = async () => {
     try {
       await loginWithFacebook();
-      const token = await getIdToken();
-      localStorage.setItem('token', token);      
-      const response = await getUserByUid()
+      await getValidToken()     
+      const user = await getUserByUid()
+      login(auth.currentUser); 
 
-      if(response.avatarUrl) {
+      if(user) {
         navigate(`/home`);
       } else {
         navigate(`/complete-profile`);
@@ -67,27 +68,24 @@ function Login() {
     } catch (error) {
         console.error('Erro no login com Facebook:', error);
     }
-  };  
+  }; 
 
   return (
     <>
-      {/* Cabeçalho estilo Google */}
       <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar sx={{ justifyContent: 'flex-end' }}>
           <Typography variant="body2" color="text.secondary">
-            v1.0
+            v0.1
           </Typography>
         </Toolbar>
       </AppBar>
 
-      {/* Conteúdo central */}
       <Container
         maxWidth="xs"
         sx={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          minHeight: '80vh',
         }}
       >
         <Box
@@ -105,14 +103,13 @@ function Login() {
           </Box>
         </Box>
 
-        {/* Formulário de email e senha */}
         <Box component="form" noValidate autoComplete="off" display="flex" flexDirection="column" gap={2}>
           <TextField
             label="E-mail"
             type="email"
             fullWidth
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
           />
 
           <Box>
@@ -121,7 +118,7 @@ function Login() {
               type="password"
               fullWidth
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
             />
             <Box textAlign="right" mt={0.5}>
               <Link href="#" underline="hover" variant="caption">
@@ -130,14 +127,18 @@ function Login() {
             </Box>
           </Box>
 
-          <Button variant="contained" fullWidth onClick={handleLogin}>
+          <Button variant="contained" fullWidth /*onClick={handleLogin}*/>
             Entrar
           </Button>
+        </Box>
+        <Box textAlign="center" mt={1}>
+          <Link href="/register" underline="hover" variant="body2">
+            Não tem conta? Cadastre-se
+          </Link>
         </Box>
 
         <Divider sx={{ my: 3 }}>ou</Divider>
 
-        {/* Botões sociais */}
         <Box display="flex" flexDirection="column" gap={2}>
           {/* <Button
             variant="outlined"
@@ -169,22 +170,6 @@ function Login() {
           </Button>
         </Box>
       </Container>
-
-      {/* Rodapé simples */}
-      <Box
-        component="footer"
-        sx={{
-          width: '100%',
-          borderTop: '1px solid #e0e0e0',
-          py: 1,
-          px: 2,
-          textAlign: 'center',
-          color: 'text.secondary',
-          fontSize: '0.875rem',
-        }}
-      >
-        © {new Date().getFullYear()} Bairros Brasil
-      </Box>
     </>
   );
 }

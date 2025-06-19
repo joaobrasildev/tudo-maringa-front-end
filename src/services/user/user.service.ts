@@ -33,3 +33,18 @@ export async function createUser(formData: FormData) {
         throw error;        
     }
 }
+
+export async function fetchCurrentUser() {
+  try {
+    const token = await getValidToken();
+    const response = await api.post('/users/me', null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar usuário atual:', error);
+    return null;
+  }
+}

@@ -88,7 +88,6 @@ function CompleteProfile() {
         Complete seu perfil
       </Typography>
 
-      {/* Upload e Preview da Imagem */}
       <Stack alignItems="center" spacing={1}>
         <Avatar
           src={previewUrl}
@@ -105,7 +104,6 @@ function CompleteProfile() {
         </Button>
       </Stack>
 
-      {/* Mora em Maringá + Bairro */}
       <Box
         display="grid"
         gridTemplateColumns={{ xs: '1fr', sm: livesInMaringa ? '1fr 1fr' : '1fr' }}
@@ -138,7 +136,6 @@ function CompleteProfile() {
         )}
       </Box>
 
-      {/* Botão de Submit */}
       <Button
         variant="contained"
         fullWidth

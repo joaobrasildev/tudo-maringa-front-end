@@ -98,7 +98,6 @@ function Register() {
         Criar conta
       </Typography>
 
-      {/* Upload e Preview da Imagem */}
       <Stack alignItems="center" spacing={1}>
         <Avatar
           src={previewUrl}
@@ -115,7 +114,6 @@ function Register() {
         </Button>
       </Stack>
 
-      {/* Mora em Maringá + Bairro */}
       <Box
         display="grid"
         gridTemplateColumns={{ xs: '1fr', sm: livesInMaringa ? '1fr 1fr' : '1fr' }}
@@ -148,7 +146,6 @@ function Register() {
         )}
       </Box>      
 
-      {/* Campo Nome */}
       <TextField
         label="Nome"
         value={name}
@@ -156,7 +153,6 @@ function Register() {
         fullWidth
       />
 
-      {/* Campo Email */}
       <TextField
         label="E-mail"
         type="email"
@@ -165,7 +161,6 @@ function Register() {
         fullWidth
       />
 
-      {/* Campo Senha */}
       <TextField
         label="Senha"
         type="password"
@@ -174,7 +169,6 @@ function Register() {
         fullWidth
       />
 
-      {/* Botão de Submit */}
       <Button
         variant="contained"
         fullWidth

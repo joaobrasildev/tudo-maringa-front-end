@@ -12,7 +12,7 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Autocomplete } from '@mui/material';
 import { getNeighborhoods } from '../services/neighborhood/neighborhood.service';
-import { loginWithEmail } from '../services/firebase/auth.service';
+import { createAccountWithEmail } from '../services/firebase/auth.service';
 import { compressImage } from '../utils/compress-image.service';
 import { createUser, getUserByUid } from '../services/user/user.service';
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +59,7 @@ function Register() {
 
   const handleRegister = async () => {
     try {
-      await loginWithEmail(email, password);
+      await createAccountWithEmail(email, password);
 
       const formData = new FormData();
       if (file) {

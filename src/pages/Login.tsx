@@ -14,7 +14,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useNavigate } from 'react-router-dom';
 import tudoMaringaLogo from '../assets/tudomaringa_logo_white.png';
-import { loginWithFacebook, loginWithGoogle } from '../services/firebase/auth.service';
+import { loginWithEmail, loginWithFacebook, loginWithGoogle } from '../services/firebase/auth.service';
 import { getUserByUid } from '../services/user/user.service';
 
 function Login() {
@@ -22,15 +22,19 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  // const handleLogin = async () => {
-  //   try {
-  //       const user = await loginWithEmail(email, password);
-  //       await getValidToken()
-  //       navigate(`/home`);
-  //   } catch (error) {
-  //       console.error('Erro no login:', error);
-  //   }
-  // };
+  const handleLogin = async () => {
+    try {
+      await loginWithEmail(email, password);
+      const user = await getUserByUid()
+      if(user) {
+        navigate(`/home`);
+      } else {
+        navigate(`/complete-profile`);
+      } 
+    } catch (error) {
+        console.error('Erro no login:', error);
+    }
+  };
 
   const handleGoogleLogin = async () => {
     try {
@@ -119,7 +123,7 @@ function Login() {
             </Box>
           </Box>
 
-          <Button variant="contained" fullWidth /*onClick={handleLogin}*/>
+          <Button variant="contained" fullWidth onClick={handleLogin}>
             Entrar
           </Button>
         </Box>
@@ -132,15 +136,6 @@ function Login() {
         <Divider sx={{ my: 3 }}>ou</Divider>
 
         <Box display="flex" flexDirection="column" gap={2}>
-          {/* <Button
-            variant="outlined"
-            fullWidth
-            startIcon={<AppleIcon />}
-            onClick={handleGoogleLogin}
-            sx={{ textTransform: 'none', fontWeight: 500 }}
-          >
-            Entrar com Apple
-          </Button>           */}
           <Button
             variant="outlined"
             fullWidth

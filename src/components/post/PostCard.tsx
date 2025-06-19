@@ -24,7 +24,7 @@ const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => 
         avatar={<Avatar src={post.user.avatarUrl} />}
         action={<IconButton><MoreVertIcon /></IconButton>}
         title={post.user.name}
-        subheader={`${post.user.neighborhood.name} • ${new Date(post.createdAt).toLocaleDateString('pt-BR', {
+        subheader={`${post.user.neighborhood?.name ?? "Fora de Maringá"} • ${new Date(post.createdAt).toLocaleDateString('pt-BR', {
           hour: '2-digit',
           minute: '2-digit',
         })}`}

@@ -16,6 +16,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { useNavigate } from 'react-router-dom';
 import tudoMaringaLogo from '../assets/tudomaringa_logo_white.png';
 import { getIdToken, loginWithEmail, loginWithFacebook, loginWithGoogle } from '../services/firebase/auth';
+import { getUserByUid } from '../services/user/user.service';
 
 
 function Login() {
@@ -36,10 +37,16 @@ function Login() {
 
   const handleGoogleLogin = async () => {
     try {
-        await loginWithGoogle();
-        await getIdToken();
+      await loginWithGoogle();
+      const token = await getIdToken();
+      localStorage.setItem('token', token);
+      const user = await getUserByUid()
 
+      if(user) {
         navigate(`/home`);
+      } else {
+        navigate(`/complete-profile`);
+      }       
     } catch (error) {
         console.error('Erro no login com Google:', error);
     }
@@ -47,10 +54,16 @@ function Login() {
 
   const handleFacebookLogin = async () => {
     try {
-        await loginWithFacebook();
-        await getIdToken();
+      await loginWithFacebook();
+      const token = await getIdToken();
+      localStorage.setItem('token', token);      
+      const response = await getUserByUid()
 
+      if(response.avatarUrl) {
         navigate(`/home`);
+      } else {
+        navigate(`/complete-profile`);
+      }
     } catch (error) {
         console.error('Erro no login com Facebook:', error);
     }

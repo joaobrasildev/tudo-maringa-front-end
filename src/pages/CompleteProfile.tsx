@@ -12,20 +12,26 @@ import {
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { getNeighborhoods } from '../services/neighborhood/neighborhood.service';
+import { compressImage } from '../utils/compress-image.service';
+import { createUser } from '../services/user/user.service';
 
 function CompleteProfile() {
+  interface NeighborhoodOption {
+    id: string;
+    name: string;
+  }
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('https://via.placeholder.com/100');
   const [livesInMaringa, setLivesInMaringa] = useState(false);
-  const [neighborhood, setNeighborhood] = useState<string | null>(null);
-  const [neighborhoodOptions, setNeighborhoodOptions] = useState<string[]>([]);
+  const [neighborhood, setNeighborhood] = useState<NeighborhoodOption | null>(null);
+  const [neighborhoodOptions, setNeighborhoodOptions] = useState<NeighborhoodOption[]>([]);
 
   useEffect(() => {
     if (livesInMaringa) return;
     const fetchNeighborhoods = async () => {
       try {
         const neighborhoods = await getNeighborhoods();
-        setNeighborhoodOptions(neighborhoods.map((neighborhood: any) => neighborhood.name));
+        setNeighborhoodOptions(neighborhoods.map((n: any) => ({ id: n.id, name: n.name })));
       } catch (error) {
         console.error('Erro ao buscar bairros:', error);
       }
@@ -44,19 +50,25 @@ function CompleteProfile() {
 
   const handleSubmit = async () => {
     const formData = new FormData();
-    if (file) formData.append('photo', file);
-    formData.append('livesInMaringa', String(livesInMaringa));
-    if (livesInMaringa && neighborhood) formData.append('neighborhood', neighborhood);
 
-    await fetch('/api/users/me/profile', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: formData,
-    });
+    if (file) {
+      const compressedFile = await compressImage(file, { maxSizeMB: 0.2, maxWidthOrHeight: 256 });
+      formData.append('avatar', compressedFile);
+    }
 
-    window.location.href = '/home';
+    if (livesInMaringa && neighborhood) {
+      formData.append('neighborhoodId', neighborhood.id);
+    }
+
+    formData.append('avatarContentType', 'image/png')
+
+    try {
+      await createUser(formData)
+
+      window.location.href = '/home';
+    } catch (error) {
+      console.error('Erro ao enviar dados de perfil:', error);
+    }
   };
 
   return (
@@ -113,10 +125,11 @@ function CompleteProfile() {
 
         {livesInMaringa && (
           <Box>
-            <Autocomplete
+            <Autocomplete<NeighborhoodOption>
               options={neighborhoodOptions}
               value={neighborhood}
               onChange={(_, newValue) => setNeighborhood(newValue)}
+              getOptionLabel={(option) => option.name}
               renderInput={(params) => <TextField {...params} label="Bairro" />}
               fullWidth
             />

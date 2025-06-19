@@ -1,9 +1,7 @@
-// src/theme.js
 import { createTheme } from '@mui/material/styles';
 import '@fontsource/inter/300.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/700.css';
-// ou: import '@fontsource/roboto/300.css'; ... caso opte por Roboto
 
 const theme = createTheme({
   palette: {

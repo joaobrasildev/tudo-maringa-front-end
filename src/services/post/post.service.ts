@@ -1,4 +1,4 @@
-import { api } from "../api.service";
+import api from "../api.service";
 import type { ICreatePost, ICreatePostAnswer } from "./post-service.insterface";
 
 export async function getPosts() {

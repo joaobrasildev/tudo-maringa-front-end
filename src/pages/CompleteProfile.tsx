@@ -14,6 +14,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { getNeighborhoods } from '../services/neighborhood/neighborhood.service';
 import { compressImage } from '../utils/compress-image.service';
 import { createUser } from '../services/user/user.service';
+import { userDefaultAvatarUrl } from '../mocks/user.mock';
 
 function CompleteProfile() {
   interface NeighborhoodOption {
@@ -21,7 +22,7 @@ function CompleteProfile() {
     name: string;
   }
   const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('https://via.placeholder.com/100');
+  const [previewUrl, setPreviewUrl] = useState<string>(userDefaultAvatarUrl);
   const [livesInMaringa, setLivesInMaringa] = useState(false);
   const [neighborhood, setNeighborhood] = useState<NeighborhoodOption | null>(null);
   const [neighborhoodOptions, setNeighborhoodOptions] = useState<NeighborhoodOption[]>([]);

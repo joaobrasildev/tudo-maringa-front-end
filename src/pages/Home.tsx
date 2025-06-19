@@ -6,25 +6,18 @@ import { createPost, createPostAnswer, getPosts } from '../services/post/post.se
 import type { Post } from '../components/post/post.interface';
 import CreatePostModal from '../components/post/CreatePostModal';
 import { getUserByUid } from '../services/user/user.service';
+import { userMock } from '../mocks/user.mock';
+import type { ICreatePost } from '../interfaces/post.interface';
+import { postImageMock } from '../mocks/post.mock';
 
 const Home = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);  
   const [posts, setPosts] = useState<Post[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState({
-      id: 'e9b12a1a-7e39-4bb4-a109-30e645eeccdc',
-      name: 'João Brasil',
-      avatarUrl: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      neighborhood: 'Centro',
-      neighborhoodId: 'e5374319-4468-44da-bda8-fd87420f6cb4',
-    })
+  const [currentUser, setCurrentUser] = useState(userMock)
   
   const fetchData = async () => {
     try {
       const postData = await getPosts();
-      const userStorage = localStorage.getItem('user')
-      console.info(userStorage)
       const user = await getUserByUid()
       if(user) {
         const currentUser = {
@@ -38,12 +31,8 @@ const Home = () => {
       }      
       setPosts(postData ?? []);
 
-      setLoading(false);
     } catch (err) {
-      setError('Erro ao carregar os dados. Por favor, tente novamente mais tarde.');
       console.error('Erro ao buscar dados:', err);
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -54,14 +43,14 @@ const Home = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleCreatePost = async (data: { text: string; image?: File }) => {
-    const dataPost = {
+  const handleCreatePost = async (data: ICreatePost) => {
+    const post = {
       content: data.text,
       neighborhoodId: currentUser.neighborhoodId,
       userId: currentUser.id,
-      image: 'https://www.parana.pr.gov.br/sites/portal-parana/arquivos_restritos/files/imagem/2019-08/turismo-geral7_1.jpg'
+      image: postImageMock
     }
-    await createPost(dataPost);
+    await createPost(post);
     await fetchData();
     handleCloseModal();
   };

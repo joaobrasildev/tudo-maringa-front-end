@@ -12,10 +12,11 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Autocomplete } from '@mui/material';
 import { getNeighborhoods } from '../services/neighborhood/neighborhood.service';
-import { getValidToken, loginWithEmail } from '../services/firebase/auth';
+import { loginWithEmail } from '../services/firebase/auth.service';
 import { compressImage } from '../utils/compress-image.service';
 import { createUser, getUserByUid } from '../services/user/user.service';
 import { useNavigate } from 'react-router-dom';
+import { userDefaultAvatarUrl } from '../mocks/user.mock';
 
 interface NeighborhoodOption {
   id: string;
@@ -28,7 +29,7 @@ function Register() {
   const [password, setPassword] = useState('');
 
   const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('https://via.placeholder.com/100');
+  const [previewUrl, setPreviewUrl] = useState<string>(userDefaultAvatarUrl);
   const [livesInMaringa, setLivesInMaringa] = useState(false);
   const [neighborhood, setNeighborhood] = useState<NeighborhoodOption | null>(null);
   const [neighborhoodOptions, setNeighborhoodOptions] = useState<NeighborhoodOption[]>([]);
@@ -59,7 +60,6 @@ function Register() {
   const handleRegister = async () => {
     try {
       await loginWithEmail(email, password);
-      await getValidToken()
 
       const formData = new FormData();
       if (file) {

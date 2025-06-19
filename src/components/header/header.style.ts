@@ -2,11 +2,11 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
 export const HeaderContainer = styled(Box)(({ theme }) => ({
-  position: 'fixed',                // ← Mantém o header fixo
+  position: 'fixed',
   top: 0,
   left: 0,
   width: '100%',
-  zIndex: 1100,                      // ← Valor alto para sobrepor o conteúdo
+  zIndex: 1100,
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.contrastText,
   display: 'flex',
@@ -17,7 +17,7 @@ export const HeaderContainer = styled(Box)(({ theme }) => ({
   paddingBottom: theme.spacing(2),
   borderRadius: '0 0 16px 16px',
   margin: '0 auto',
-  boxShadow: theme.shadows[4],       // ← Sombra leve (opcional, visualmente recomendado)
+  boxShadow: theme.shadows[4],
 }));
 
 export const NavContainer = styled(Box)({

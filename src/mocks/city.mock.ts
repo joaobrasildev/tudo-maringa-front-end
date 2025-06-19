@@ -1,0 +1,1 @@
+export const cityIdMock = '00c818c8-c6cf-4d3d-9c13-f65d0a9de03c'

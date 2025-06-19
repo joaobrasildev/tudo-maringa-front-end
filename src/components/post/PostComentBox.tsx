@@ -8,11 +8,10 @@ interface PostCommentsBoxProps {
   onAddComment: (commentText: string) => void;
 }
 
-const PostCommentsBox = ({ postId, initialComments, onAddComment }: PostCommentsBoxProps) => {
+const PostCommentsBox = ({ initialComments, onAddComment }: PostCommentsBoxProps) => {
   const [commentText, setCommentText] = useState('');
   const [showAll, setShowAll] = useState(false);
   const visibleComments = showAll ? initialComments : initialComments.slice(0, 1);
-    console.info(postId)
   const handleSubmit = () => {
     if (!commentText.trim()) return;
     onAddComment(commentText);

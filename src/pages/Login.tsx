@@ -14,17 +14,13 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { useNavigate } from 'react-router-dom';
 import tudoMaringaLogo from '../assets/tudomaringa_logo_white.png';
-import { getValidToken, loginWithFacebook, loginWithGoogle } from '../services/firebase/auth';
+import { loginWithFacebook, loginWithGoogle } from '../services/firebase/auth.service';
 import { getUserByUid } from '../services/user/user.service';
-import { useAuth } from '../providers/auth.provider';
-import { auth } from '../services/firebase/firebase';
-
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   // const handleLogin = async () => {
   //   try {
@@ -39,9 +35,7 @@ function Login() {
   const handleGoogleLogin = async () => {
     try {
       await loginWithGoogle();
-      await getValidToken()
       const user = await getUserByUid()
-      login(auth.currentUser); 
 
       if(user) {
         navigate(`/home`);
@@ -55,10 +49,8 @@ function Login() {
 
   const handleFacebookLogin = async () => {
     try {
-      await loginWithFacebook();
-      await getValidToken()     
+      await loginWithFacebook();    
       const user = await getUserByUid()
-      login(auth.currentUser); 
 
       if(user) {
         navigate(`/home`);

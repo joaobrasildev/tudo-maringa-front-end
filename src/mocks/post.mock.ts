@@ -1,0 +1,1 @@
+export const postImageMock = 'https://www.parana.pr.gov.br/sites/portal-parana/arquivos_restritos/files/imagem/2019-08/turismo-geral7_1.jpg'

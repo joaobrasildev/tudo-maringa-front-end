@@ -1,1 +1,2 @@
 export const postImageMock = 'https://www.parana.pr.gov.br/sites/portal-parana/arquivos_restritos/files/imagem/2019-08/turismo-geral7_1.jpg'
+export const neighborhoodIdMock = 'e5374319-4468-44da-bda8-fd87420f6cb4'

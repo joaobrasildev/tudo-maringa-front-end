@@ -70,6 +70,7 @@ function Register() {
         formData.append('neighborhoodId', neighborhood.id);
       }
       formData.append('avatarContentType', 'image/png')
+      formData.append('name', name)
       await createUser(formData)
       const user = await getUserByUid()
       if(user) {

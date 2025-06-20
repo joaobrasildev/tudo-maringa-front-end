@@ -1,3 +1,5 @@
+import type { NeighborhoodOption } from "./CreatePostModal";
+
 interface User {
   id: string;
   name: string;
@@ -23,6 +25,7 @@ export interface Post {
   id: string;
   content: string;
   image?: string;
+  neighborhood: NeighborhoodOption
   createdAt: string;
   user: User;
   postAnswers: PostAnswers[];

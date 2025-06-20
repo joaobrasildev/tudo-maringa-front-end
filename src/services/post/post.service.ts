@@ -1,5 +1,5 @@
 import api from "../api.service";
-import type { ICreatePost, ICreatePostAnswer } from "./post-service.insterface";
+import type { ICreatePostAnswer } from "./post-service.insterface";
 
 export async function getPosts() {
     try {       
@@ -21,9 +21,9 @@ export async function createPostAnswer(postAnswer: ICreatePostAnswer) {
     }
 }
 
-export async function createPost(post: ICreatePost) {
+export async function createPost(formData: FormData) {
     try {       
-      const response = await api.post('/post', post);
+      const response = await api.post('/post', formData);
       return response.data;
     } catch (error) {
         console.error('Erro ao criar post:', error);

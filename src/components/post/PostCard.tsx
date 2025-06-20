@@ -15,16 +15,14 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import type { PostCardProps } from './post.interface';
 import PostCommentsBox from './PostComentBox';
 
-
-
 const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => {
   return (
     <Card variant="outlined">
       <CardHeader
         avatar={<Avatar src={post.user.avatarUrl} />}
         action={<IconButton><MoreVertIcon /></IconButton>}
-        title={post.user.name}
-        subheader={`${post.user.neighborhood?.name ?? "Fora de Maringá"} • ${new Date(post.createdAt).toLocaleDateString('pt-BR', {
+        title={`${post.user.name} | ${post.user.neighborhood?.name ?? "Fora de Maringá"}`} 
+        subheader={`${new Date(post.createdAt).toLocaleDateString('pt-BR', {
           hour: '2-digit',
           minute: '2-digit',
         })}`}
@@ -68,6 +66,15 @@ const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => 
           />
         </Box>
       )}
+      {post.neighborhood?.name && (
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ px: 2, pt: 1, display: 'block' }}
+        >
+          Em {post.neighborhood.name}
+        </Typography>
+      )}      
       <CardContent sx={{ pb: 0 }}>
         <Typography variant="body1">{post.content}</Typography>
       </CardContent>

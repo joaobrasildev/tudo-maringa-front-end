@@ -8,5 +8,6 @@ export interface ICreatePost {
   content: string;
   neighborhoodId?: string;
   userId: string
-  image?: string;
+  postImage?: Buffer;
+  postImageContentType?: string
 }

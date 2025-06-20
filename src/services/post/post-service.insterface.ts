@@ -6,7 +6,7 @@ export interface ICreatePostAnswer {
 
 export interface ICreatePost {
   content: string;
-  neighborhoodId: string;
+  neighborhoodId?: string;
   userId: string
   image?: string;
 }

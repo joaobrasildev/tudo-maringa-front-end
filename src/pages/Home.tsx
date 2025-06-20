@@ -8,7 +8,7 @@ import CreatePostModal from '../components/post/CreatePostModal';
 import { getUserByUid } from '../services/user/user.service';
 import { userMock } from '../mocks/user.mock';
 import type { ICreatePost } from '../interfaces/post.interface';
-import { neighborhoodIdMock, postImageMock } from '../mocks/post.mock';
+import { postImageMock } from '../mocks/post.mock';
 
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -46,7 +46,7 @@ const Home = () => {
   const handleCreatePost = async (data: ICreatePost) => {
     const post = {
       content: data.text,
-      neighborhoodId: neighborhoodIdMock,
+      neighborhoodId: data.neighborhood?.id,
       userId: currentUser.id,
       image: postImageMock
     }

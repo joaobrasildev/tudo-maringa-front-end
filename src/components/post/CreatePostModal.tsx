@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Avatar,
   Box,
   Button,
@@ -11,20 +12,48 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import { getNeighborhoods } from '../../services/neighborhood/neighborhood.service';
+import type { ICreatePost } from '../../interfaces/post.interface';
 
 type CreatePostModalProps = {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: { text: string; image?: File }) => void;
+  onSubmit: (data: ICreatePost) => void;
   currentUser: { avatarUrl: string; name: string };
 };
+
+export type NeighborhoodOption = { id: string; name: string };
 
 const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostModalProps) => {
   const [text, setText] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [neighborhood, setNeighborhood] = useState<NeighborhoodOption | null>(null);
+  const [neighborhoodOptions, setNeighborhoodOptions] = useState<NeighborhoodOption[]>([]);
 
+  useEffect(() => {
+    if (!open) {
+      setText('');
+      setImage(null);
+      setPreviewUrl(null);
+      setNeighborhood(null);
+    } else {
+      (async () => {
+        const neighborhoods = await getNeighborhoods();
+        setNeighborhoodOptions(
+          neighborhoods.map((neighborhood: any) => (
+            { 
+              id: neighborhood.id, 
+              name: neighborhood.name 
+            }
+          ))
+        );
+      })();
+    }
+  }, [open]);
+  
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -35,7 +64,7 @@ const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostMod
 
   const handlePost = () => {
     if (!text.trim()) return;
-    onSubmit({ text, image: image ?? undefined });
+    onSubmit({ text, image: image ?? undefined, neighborhood: neighborhood ?? undefined });
     setText('');
     setImage(null);
     setPreviewUrl(null);
@@ -65,18 +94,35 @@ const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostMod
           onChange={(e) => setText(e.target.value)}
         />
 
-        <Box mt={2}>
-          <Button component="label" variant="outlined">
-            Escolher imagem
-            <input type="file" hidden accept="image/*" onChange={handleImageChange} />
-          </Button>
+        <Box display="flex" alignItems="center" gap={1} mt={2}>
+          <IconButton color="primary" component="label" sx={{ height: 40, width: 40 }}>
+            <AddAPhotoIcon />
+            <input hidden accept="image/*" type="file" onChange={handleImageChange} />
+          </IconButton>
 
-          {previewUrl && (
-            <Box mt={2}>
-              <img src={previewUrl} alt="Preview" style={{ maxWidth: '100%', borderRadius: 8 }} />
-            </Box>
-          )}
-        </Box>
+          <Box flex={1}>
+            <Autocomplete<NeighborhoodOption>
+              options={neighborhoodOptions}
+              value={neighborhood}
+              onChange={(_, newValue) => setNeighborhood(newValue)}
+              getOptionLabel={(option) => option.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Adicione a localização (bairro)"
+                  size="small"
+                />
+              )}
+              fullWidth
+            />
+          </Box>
+        </Box>         
+
+        {previewUrl && (
+          <Box mt={2}>
+            <img src={previewUrl} alt="Preview" style={{ maxWidth: '100%', borderRadius: 8 }} />
+          </Box>
+        )}     
       </DialogContent>
 
       <DialogActions>

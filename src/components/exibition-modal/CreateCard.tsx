@@ -1,14 +1,16 @@
 import { Avatar, Box, Card, CardContent, Typography } from '@mui/material';
 
-type CreatePostCardProps = {
+type CreateCardProps = {
   currentUser: {
     avatarUrl: string;
     name: string;
   };
+  placeholder: string;
   onOpenModal?: () => void;
+  
 };
 
-const CreatePostCard = ({ currentUser, onOpenModal }: CreatePostCardProps) => {
+const CreateCard = ({ currentUser, onOpenModal, placeholder }: CreateCardProps) => {
   return (
     <Card variant="outlined" sx={{ mb: 2 }}>
       <CardContent sx={{ pb: 0, "& .MuiButton-root": { mb: 0 } }}>
@@ -26,7 +28,7 @@ const CreatePostCard = ({ currentUser, onOpenModal }: CreatePostCardProps) => {
               "&:hover": { backgroundColor: "#e6e6e6" },
             }}
           >
-            <Typography color="textSecondary">Comece uma publicação</Typography>
+            <Typography color="textSecondary">{placeholder}</Typography>
           </Box>
         </Box>
       </CardContent>
@@ -34,4 +36,4 @@ const CreatePostCard = ({ currentUser, onOpenModal }: CreatePostCardProps) => {
   );
 };
 
-export default CreatePostCard;
+export default CreateCard;

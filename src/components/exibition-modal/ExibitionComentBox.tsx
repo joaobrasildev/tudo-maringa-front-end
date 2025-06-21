@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Box, Avatar, Typography, TextField, Button } from '@mui/material';
-import type { PostAnswers } from './post.interface';
+import type { IExibitionComent } from '../../interfaces/exibition-modal.interface';
 
 interface PostCommentsBoxProps {
-  postId: string;
-  initialComments: PostAnswers[];
+  id: string;
+  initialComments: IExibitionComent[];
   onAddComment: (commentText: string) => void;
 }
 
-const PostCommentsBox = ({ initialComments, onAddComment }: PostCommentsBoxProps) => {
+const ExibitionCommentBox = ({ initialComments, onAddComment }: PostCommentsBoxProps) => {
   const [commentText, setCommentText] = useState('');
   const [showAll, setShowAll] = useState(false);
   const visibleComments = showAll ? initialComments : initialComments.slice(0, 1);
@@ -61,4 +61,4 @@ const PostCommentsBox = ({ initialComments, onAddComment }: PostCommentsBoxProps
   );
 };
 
-export default PostCommentsBox;
+export default ExibitionCommentBox;

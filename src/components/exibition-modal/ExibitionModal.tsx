@@ -15,18 +15,29 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from 'react';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { getNeighborhoods } from '../../services/neighborhood/neighborhood.service';
-import type { ICreatePost } from '../../interfaces/post.interface';
+import type { IExibitionModal } from '../../interfaces/exibition-modal.interface';
 
-type CreatePostModalProps = {
+type ExibitionModalProps = {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: ICreatePost) => void;
+  onSubmit: (data: IExibitionModal) => Promise<void>;
   currentUser: { avatarUrl: string; name: string };
+  placeholderTextField: string;
+  placeholderNeighborhood: string,
+  neighborhoodRequired?: boolean;
 };
 
 export type NeighborhoodOption = { id: string; name: string };
 
-const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostModalProps) => {
+const ExibitionModal = ({ 
+  open, 
+  onClose, 
+  onSubmit, 
+  currentUser,
+  placeholderTextField,
+  placeholderNeighborhood,
+  neighborhoodRequired = false 
+}: ExibitionModalProps) => {
   const [text, setText] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -64,7 +75,12 @@ const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostMod
 
   const handlePost = () => {
     if (!text.trim()) return;
-    onSubmit({ text, image: image ?? undefined, neighborhood: neighborhood ?? undefined });
+    if (neighborhoodRequired && !neighborhood) return;
+    onSubmit({ 
+      text, 
+      image: image ?? undefined, 
+      neighborhood: neighborhood ?? undefined 
+    });
     setText('');
     setImage(null);
     setPreviewUrl(null);
@@ -85,7 +101,7 @@ const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostMod
         </Box>
 
         <TextField
-          placeholder="No que você está pensando?"
+          placeholder={placeholderTextField}
           multiline
           minRows={4}
           fullWidth
@@ -109,8 +125,10 @@ const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostMod
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Adicione a localização (bairro)"
+                  placeholder={placeholderNeighborhood}
                   size="small"
+                  error={neighborhoodRequired && !neighborhood}
+                  helperText={neighborhoodRequired && !neighborhood ? 'Selecione um bairro' : ''}
                 />
               )}
               fullWidth
@@ -133,4 +151,4 @@ const CreatePostModal = ({ open, onClose, onSubmit, currentUser }: CreatePostMod
   );
 };
 
-export default CreatePostModal;
+export default ExibitionModal;

@@ -45,8 +45,8 @@ const Header = () => {
         <>
           <NavContainer>
             <Button color="primary" onClick={() => navigate('/home')}>Home</Button>
-            <Button color="primary" onClick={() => navigate('/neighborhoods/00c818c8-c6cf-4d3d-9c13-f65d0a9de03c')}>Bairros</Button>
-            <Button color="primary" onClick={() => navigate('/duvidas')}>Perguntas | Dúvidas</Button>
+            <Button color="primary" onClick={() => navigate('/question')}>Dúvidas (bairros)</Button>
+            <Button color="primary" onClick={() => navigate('/neighborhoods/00c818c8-c6cf-4d3d-9c13-f65d0a9de03c')}>Comentários (bairros)</Button>
           </NavContainer>
 
           <Button color="primary" onClick={handleAuth}>
@@ -71,8 +71,8 @@ const Header = () => {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
           >
             <MenuItem onClick={() => handleMenuItemClick('/home')}>Home</MenuItem>
-            <MenuItem onClick={() => handleMenuItemClick('/neighborhoods/00c818c8-c6cf-4d3d-9c13-f65d0a9de03c')}>Bairros</MenuItem>
-            <MenuItem onClick={() => handleMenuItemClick('/duvidas')}>Perguntas | Dúvidas</MenuItem>
+            <MenuItem onClick={() => handleMenuItemClick('/question')}>Dúvidas (bairros)</MenuItem>
+            <MenuItem onClick={() => handleMenuItemClick('/duvidas')}>Comentários (bairros)</MenuItem>
             <MenuItem onClick={handleAuth}>{isLoggedIn ? 'Logout' : 'Login'}</MenuItem>
           </Menu>
         </>

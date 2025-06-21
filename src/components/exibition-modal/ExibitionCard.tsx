@@ -12,23 +12,31 @@ import {
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import type { PostCardProps } from './post.interface';
-import PostCommentsBox from './PostComentBox';
+import ExibitionCommentBox from './ExibitionComentBox';
+import type { IExibitionCard } from '../../interfaces/exibition-card.interface';
 
-const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => {
+export interface ExibitionCardProps {
+  props: IExibitionCard;
+  allowImages?: boolean;
+  showLocation: boolean;
+  onAddComment: (id: string, commentText: string) => void;
+}
+
+const ExibitionCard = ({ props, allowImages = true, showLocation = false, onAddComment }: ExibitionCardProps) => {
   return (
     <Card variant="outlined">
       <CardHeader
-        avatar={<Avatar src={post.user.avatarUrl} />}
+        sx={{ mb: 0, pb: 0.8 }}
+        avatar={<Avatar src={props.user.avatarUrl} />}
         action={<IconButton><MoreVertIcon /></IconButton>}
-        title={`${post.user.name} | ${post.user.neighborhood?.name ?? "Fora de Maringá"}`} 
-        subheader={`${new Date(post.createdAt).toLocaleDateString('pt-BR', {
+        title={`${props.user.name} | ${props.user.neighborhood?.name ?? "Fora de Maringá"}`} 
+        subheader={`${new Date(props.createdAt).toLocaleDateString('pt-BR', {
           hour: '2-digit',
           minute: '2-digit',
         })}`}
       />
 
-      {allowImages && post.image && (
+      {allowImages && props.image && (
         <Box
           sx={{
             width: '100%',
@@ -39,7 +47,7 @@ const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => 
         >
           <Box
             component="img"
-            src={post.image}
+            src={props.image}
             alt="Background blur"
             sx={{
               position: 'absolute',
@@ -54,7 +62,7 @@ const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => 
           />
           <CardMedia
             component="img"
-            image={post.image}
+            image={props.image}
             alt="Post image"
             sx={{
               position: 'relative',
@@ -66,17 +74,19 @@ const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => 
           />
         </Box>
       )}
-      {post.neighborhood?.name && (
+      {props.neighborhood?.name 
+      && showLocation
+      && (
         <Typography
           variant="caption"
-          color="text.secondary"
-          sx={{ px: 2, pt: 1, display: 'block' }}
+          color="primary.main"
+          sx={{ px: 0.5, pt: 0.3, display: 'block' }}
         >
-          Em {post.neighborhood.name}
+          Em {props.neighborhood.name}
         </Typography>
       )}      
       <CardContent sx={{ pb: 0 }}>
-        <Typography variant="body1">{post.content}</Typography>
+        <Typography variant="body1">{props.content}</Typography>
       </CardContent>
 
       <CardActions sx={{ pt: 0 }} disableSpacing>
@@ -84,17 +94,17 @@ const PostCard = ({ post, allowImages = true, onAddComment }: PostCardProps) => 
           <FavoriteBorderIcon />
         </IconButton>
         <IconButton aria-label="Comentar">
-          <ChatBubbleOutlineIcon /> {post.postAnswers?.length}
+          <ChatBubbleOutlineIcon /> {props.comments?.length}
         </IconButton>
       </CardActions>
 
-      <PostCommentsBox
-        postId={post.id}
-        initialComments={post.postAnswers}
-        onAddComment={(text) => onAddComment(post.id, text)}
+      <ExibitionCommentBox
+        id={props.id}
+        initialComments={props.comments}
+        onAddComment={(text) => onAddComment(props.id, text)}
       />
     </Card>
   );
 };
 
-export default PostCard;
+export default ExibitionCard;

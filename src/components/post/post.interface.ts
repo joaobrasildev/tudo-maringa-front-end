@@ -1,6 +1,7 @@
-import type { NeighborhoodOption } from "./CreatePostModal";
+import type { IExibitionComent } from "../../interfaces/exibition-modal.interface";
+import type { NeighborhoodOption } from "../exibition-modal/ExibitionModal";
 
-interface User {
+export interface User {
   id: string;
   name: string;
   avatarUrl: string;
@@ -21,24 +22,24 @@ export interface PostAnswers {
   user: User;
 }
 
-export interface Post {
+export interface IPost {
   id: string;
   content: string;
   image?: string;
   neighborhood: NeighborhoodOption
   createdAt: string;
   user: User;
-  postAnswers: PostAnswers[];
+  postAnswers: IExibitionComent[];
 }
 
 export interface PostCardProps {
-  post: Post;
+  post: IPost;
   allowImages?: boolean;
   onAddComment: (postId: string, commentText: string) => void;
 }
 
 export interface PostListProps {
-  posts: Post[];
+  posts: IPost[];
   allowImages?: boolean;
   onAddComment: (postId: string, commentText: string) => void;
 }

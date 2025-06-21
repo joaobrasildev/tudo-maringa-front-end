@@ -22,11 +22,11 @@ export async function createPostAnswer(postAnswer: ICreatePostAnswer) {
 }
 
 export async function createPost(formData: FormData) {
-    try {       
-      const response = await api.post('/post', formData);
-      return response.data;
-    } catch (error) {
-        console.error('Erro ao criar post:', error);
-        throw error;        
-    }
+  try {       
+    const response = await api.post('/post', formData);
+    return response.data;
+  } catch (error) {
+      console.error('Erro ao criar post:', error);
+      throw error;        
+  }
 }

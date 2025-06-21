@@ -1,4 +1,4 @@
-import type { NeighborhoodOption } from "../components/post/CreatePostModal";
+import type { NeighborhoodOption } from "../components/exibition-modal/ExibitionModal";
 
 export interface ICreatePost {
  text: string;

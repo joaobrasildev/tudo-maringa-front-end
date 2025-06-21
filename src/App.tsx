@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import CompleteProfile from './pages/CompleteProfile';
 import Register from './pages/Register';
 import { AuthProvider } from './providers/auth.provider';
+import Question from './pages/Question';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/complete-profile" element={<CompleteProfile />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/question" element={<Question />} />
               </Routes>
             </Content>
             <Footer/>

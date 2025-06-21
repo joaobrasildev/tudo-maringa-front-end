@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Backdrop, CircularProgress, Container } from '@mui/material';
+import { Autocomplete, Backdrop, Box, CircularProgress, Container, TextField } from '@mui/material';
 import ExibitionList from '../components/exibition-modal/ExibitionList';
 import CreateCard from '../components/exibition-modal/CreateCard';
 import ExibitionModal from '../components/exibition-modal/ExibitionModal';
@@ -10,6 +10,7 @@ import type { IExibitionModal } from '../interfaces/exibition-modal.interface';
 import { questionBuilder } from '../builders/question.builder';
 import { userBuilder } from '../builders/user.builder';
 import type { IExibitionCard } from '../interfaces/exibition-card.interface';
+//import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const Question = () => {
   const [questions, setQuestions] = useState<IExibitionCard[]>([]);
@@ -80,6 +81,29 @@ const Question = () => {
           onOpenModal={handleOpenModal}
           placeholder={createQuestionPlaceHolder}
         />
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mt: 2, mb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+            {/* <LocationOnIcon color="action" sx={{ mr: 1, color: 'primary.main' }} /> */}
+            <Autocomplete
+              options={['Vila Bosque', 'Centro']} // Array de bairros
+              //value={'Centro'}
+              //onChange={(_, newValue) => setSelectedNeighborhood(newValue)}
+              renderInput={(params) => (
+                <TextField {...params} label="Bairro" size="small" />
+              )}
+              sx={{ flex: 1 }}
+            />
+          </Box>
+          <Autocomplete
+            options={['Educação', 'Saúde', 'Transporte']} // Array de categorias (exemplo: ['Educação', 'Saúde', 'Transporte'])
+            //value={'Educação'}
+            //onChange={(_, newValue) => setSelectedCategory(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} label="Categoria" size="small" />
+            )}
+            sx={{ flex: 1 }}
+          />
+        </Box>
         <ExibitionModal
           open={isModalOpen}
           onClose={handleCloseModal}

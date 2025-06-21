@@ -3,7 +3,7 @@ import type { ICreateQuestion, ICreateQuestionAnswer } from "./question-service.
 
 export async function getQuestions() {
   try {       
-    const response = await api.get('/questions/e5374319-4468-44da-bda8-fd87420f6cb4');
+    const response = await api.get('/questions');
     return response.data;
   } catch (error) {
     console.error('Erro ao buscar questions:', error);

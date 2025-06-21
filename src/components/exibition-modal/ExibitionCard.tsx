@@ -14,6 +14,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ExibitionCommentBox from './ExibitionComentBox';
 import type { IExibitionCard } from '../../interfaces/exibition-card.interface';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export interface ExibitionCardProps {
   props: IExibitionCard;
@@ -74,19 +75,26 @@ const ExibitionCard = ({ props, allowImages = true, showLocation = false, onAddC
           />
         </Box>
       )}
-      {props.neighborhood?.name 
-      && showLocation
-      && (
-        <Typography
-          variant="caption"
-          color="primary.main"
-          sx={{ px: 0.5, pt: 0.3, display: 'block' }}
-        >
-          Em {props.neighborhood.name}
+      <Typography
+        variant="caption"
+        color="primary.main"
+        sx={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 0.3,
+          px: 1.5,
+          pt: 0.3,
+          mb: 0,
+        }}
+      >
+        <LocationOnIcon sx={{ fontSize: 16, color: 'primary.main', mr: 0.5 }} />
+        {showLocation ? 'Em' : 'Sobre:'} {props.neighborhood?.name ?? 'Maringá'}
+      </Typography>
+
+      <CardContent sx={{ pt: 0, mt: 0, pb: 0 }}>
+        <Typography variant="body1" sx={{ m: 0, p: 0 }}>
+          {props.content}
         </Typography>
-      )}      
-      <CardContent sx={{ pb: 0 }}>
-        <Typography variant="body1">{props.content}</Typography>
       </CardContent>
 
       <CardActions sx={{ pt: 0 }} disableSpacing>

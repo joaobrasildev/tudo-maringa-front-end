@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import tudoMaringaLogo from '../../assets/tudomaringa_logo.png';
 import { HeaderContainer, NavContainer, Logo } from './header.style';
 import { useAuth } from '../../providers/auth.provider';
+import SideDrawerMenu from '../menu/SideMenu';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Header = () => {
   const { isLoggedIn, logout } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const open = Boolean(anchorEl);
 
   const handleAuth = () => {
@@ -22,6 +24,10 @@ const Header = () => {
     } else {
       navigate('/home');
     }
+  };
+
+  const handleNavigate = (route: string) => {
+    navigate(route);
   };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,44 +45,18 @@ const Header = () => {
 
   return (
     <HeaderContainer as="header">
-      <Logo src={tudoMaringaLogo} alt="TUDO Maringá Logo" />
+      {/* <Logo src={tudoMaringaLogo} alt="TUDO Maringá Logo" /> */}
+      <Box sx={{ flexGrow: 1 }} />
+      <IconButton color="inherit" onClick={() => setMenuOpen(true)}>
+        <MenuIcon />
+      </IconButton>
 
-      {!isMobile && (
-        <>
-          <NavContainer>
-            <Button color="primary" onClick={() => navigate('/home')}>Home</Button>
-            <Button color="primary" onClick={() => navigate('/question')}>Dúvidas (bairros)</Button>
-            <Button color="primary" onClick={() => navigate('/neighborhoods/00c818c8-c6cf-4d3d-9c13-f65d0a9de03c')}>Comentários (bairros)</Button>
-          </NavContainer>
-
-          <Button color="primary" onClick={handleAuth}>
-            {isLoggedIn ? 'Logout' : 'Login'}
-          </Button>
-        </>
-      )}
-
-      {isMobile && (
-        <>
-          <Box sx={{ flexGrow: 1 }} />
-
-          <IconButton color="inherit" onClick={handleMenuOpen}>
-            <MenuIcon />
-          </IconButton>
-
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleMenuClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          >
-            <MenuItem onClick={() => handleMenuItemClick('/home')}>Home</MenuItem>
-            <MenuItem onClick={() => handleMenuItemClick('/question')}>Dúvidas (bairros)</MenuItem>
-            <MenuItem onClick={() => handleMenuItemClick('/duvidas')}>Comentários (bairros)</MenuItem>
-            <MenuItem onClick={handleAuth}>{isLoggedIn ? 'Logout' : 'Login'}</MenuItem>
-          </Menu>
-        </>
-      )}
+      <SideDrawerMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        onNavigate={handleNavigate}
+        isLoggedIn={isLoggedIn}
+      />
     </HeaderContainer>
   );
 };
